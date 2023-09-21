@@ -1,0 +1,192 @@
+<form [formGroup]="articulosForm" (ngSubmit)="onSubmit()">
+    <div class="row mb-3">
+        <div class="col-2">
+          <label class="col-form-label">SKU:</label>
+        </div>
+        <div class="col-4">
+            <input formControlName="sku" type="number" class="form-control">
+            <span class="text-danger small" *ngIf="articulosForm.get('sku')?.errors?.['required'] && articulosForm.get('sku')?.touched">
+                El SKU es requerido.
+            </span>
+            <span class="text-danger small" *ngIf="articulosForm.get('sku')?.errors?.['max']">
+                El SKU no debe tener mas de 6 digitos.
+            </span>
+            <span class="text-danger small" *ngIf="articulosForm.get('sku')?.errors?.['min']">
+                El SKU debe ser mayor a 0.
+            </span>
+        </div>
+        <div class="col-4 offset-2">
+            <div class="form-check float-end">
+                <input formControlName="descontinuado" class="form-check-input mt-2" type="checkbox" id="flexCheckDefault">
+                <label class="form-check-label col-form-label">
+                  Descontinuado
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-2">
+            <label class="col-form-label">Articulo:</label>
+        </div>
+        <div class="col-10">
+            <input formControlName="articulo" type="text" class="form-control">
+            <span class="text-danger small" *ngIf="articulosForm.get('articulo')?.errors?.['required'] && articulosForm.get('articulo')?.touched">
+                El nombre del articulo es requerido.
+            </span>
+            <span class="text-danger small" *ngIf="articulosForm.get('articulo')?.errors?.['maxlength']">
+                El nombre no debe tener mas de 15 caracteres.
+            </span>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-2">
+            <label class="col-form-label">Marca:</label>
+        </div>
+        <div class="col-10">
+            <input formControlName="marca" type="text" class="form-control">
+            <span class="text-danger small" *ngIf="articulosForm.get('marca')?.errors?.['required'] && articulosForm.get('marca')?.touched">
+                La marca del articulo es requerido.
+            </span>
+            <span class="text-danger small" *ngIf="articulosForm.get('marca')?.errors?.['maxlength']">
+                La marca no debe tener mas de 15 caracteres.
+            </span>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-2">
+            <label class="col-form-label">Modelo:</label>
+        </div>
+        <div class="col-10">
+            <input formControlName="modelo" type="text" class="form-control">
+            <span class="text-danger small" *ngIf="articulosForm.get('modelo')?.errors?.['required'] && articulosForm.get('modelo')?.touched">
+                El modelo del articulo es requerido.
+            </span>
+            <span class="text-danger small" *ngIf="articulosForm.get('modelo')?.errors?.['maxlength']">
+                El modelo no debe tener mas de 20 caracteres.
+            </span>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-2">
+            <label class="col-form-label">Departamento:</label>
+        </div>
+        <div class="col-10">
+            <select (change)="onSelectDepartamento()" formControlName="departamento" class="form-select" aria-label="Seleccione departamento">
+                <option selected></option>
+                <option *ngFor="let departamento of departamentosArray" [value]="departamento.id">{{departamento.numero_departamento}} - {{departamento.nombre}}</option>
+            </select>
+            <span class="text-danger small" *ngIf="articulosForm.get('departamento')?.errors?.['required'] && articulosForm.get('departamento')?.touched">
+                El departamento es requerido.
+            </span>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-2">
+            <label class="col-form-label">Clase:</label>
+        </div>
+        <div class="col-10">
+            <select (change)="onSelectClase()" formControlName="clase" class="form-select" aria-label="Seleccione clase">
+                <option selected></option>
+                <option *ngFor="let clase of clasesArray" [value]="clase.id">{{clase.numero_clase}} - {{clase.nombre}}</option>
+            </select>
+            <span class="text-danger small" *ngIf="articulosForm.get('clase')?.errors?.['required'] && articulosForm.get('clase')?.touched">
+                La clase es requerida.
+            </span>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-2">
+            <label class="col-form-label">Familia:</label>
+        </div>
+        <div class="col-10">
+            <select formControlName="familia_id" class="form-select" aria-label="Seleccione familia">
+                <option selected></option>
+                <option *ngFor="let familia of familiasArray" [value]="familia.id">{{familia.numero_familia}} - {{familia.nombre}}</option>
+            </select>
+            <span class="text-danger small" *ngIf="articulosForm.get('familia_id')?.errors?.['required'] && articulosForm.get('familia_id')?.touched">
+                La familia es requerida.
+            </span>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-2">
+            <label class="col-form-label">Stock:</label>
+        </div>
+        <div class="col-4">
+            <input formControlName="stock" type="number" class="form-control">
+            <span class="text-danger small" *ngIf="articulosForm.get('stock')?.errors?.['required'] && articulosForm.get('stock')?.touched">
+                El stock es requerido.
+            </span>
+            <span class="text-danger small" *ngIf="articulosForm.get('stock')?.errors?.['max']">
+                El stock no debe tener mas de 9 digitos.
+            </span>
+            <span class="text-danger small" *ngIf="articulosForm.get('stock')?.errors?.['min']">
+                El stock debe ser mayor a 0.
+            </span>
+        </div>
+        <div class="col-2">
+            <label class="col-form-label">Cantidad:</label>
+        </div>
+        <div class="col-4">
+            <input formControlName="cantidad" type="number" class="form-control">
+            <div class="row">
+                <span class="text-danger small" *ngIf="articulosForm.get('cantidad')?.errors?.['required'] && articulosForm.get('cantidad')?.touched">
+                    La cantidad es requerida.
+                </span>
+            </div>
+            <div class="row">
+                <span class="text-danger small" *ngIf="articulosForm.get('cantidad')?.errors?.['max']">
+                    La cantidad no debe tener mas de 9 digitos.
+                </span>
+            </div>
+            <div class="row">
+                <span class="text-danger small" *ngIf="articulosForm.get('cantidad')?.errors?.['min']">
+                    La cantidad debe ser mayor a 0.
+                </span>
+            </div>
+            <div class="row">
+                <span class="text-danger small" *ngIf="articulosForm.get('cantidad')?.value > articulosForm.get('stock')?.value">
+                    La cantidad no debe ser mayor al stock.
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-2">
+            <label class="col-form-label">Fecha Alta:</label>
+        </div>
+        <div class="col-4">
+            <input formControlName="fecha_alta" type="date" class="form-control">
+        </div>
+        <div class="col-2">
+            <label class="col-form-label">Fecha Baja:</label>
+        </div>
+        <div class="col-4">
+            <input formControlName="fecha_baja" type="date" class="form-control">
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary float-end">Buscar SKU</button>
+    <button *ngIf="isCreating && formEnabled" (click)="saveArticulo()" type="button" class="btn btn-success">Guardar</button>
+    <button *ngIf="!isCreating && formEnabled" (click)="updateArticulo()" type="button" class="btn btn-warning">Actualizar</button>
+    <button *ngIf="formEnabled && !isCreating" type="button" class="btn btn-danger ms-3" data-bs-toggle="modal" data-bs-target="#exampleModal">Eliminar</button>
+</form>
+
+  
+  <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+    <div class="modal-content">
+    <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Advertencia!</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+        Esta seguro de eliminar el articulo?
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button (click)="deleteArticulo()" type="button" class="btn btn-danger" data-bs-dismiss="modal">Eliminar</button>
+    </div>
+    </div>
+</div>
+</div>
